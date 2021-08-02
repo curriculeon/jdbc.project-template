@@ -1,7 +1,9 @@
 package com.github.curriculeon;
 
 import java.sql.*;
+
 import com.mysql.cj.jdbc.Driver;
+
 import java.util.StringJoiner;
 
 public class ApplicationRunner implements Runnable {
@@ -41,7 +43,12 @@ public class ApplicationRunner implements Runnable {
     private Connection getConnection(String dbVendor) {
         String username = "root";
         String password = "";
-        String url = "jdbc:" + dbVendor + "://127.0.0.1/";
+        String url = new StringBuilder()
+                .append("jdbc:")
+                .append(dbVendor)
+                .append("://127.0.0.1/")
+                .append("?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC")
+                .toString();
         try {
             return DriverManager.getConnection(url, username, password);
         } catch (SQLException e) {
